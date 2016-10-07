@@ -1,0 +1,247 @@
+
+% !TEX TS-program = pdflatex
+% !TEX encoding = UTF-8 Unicode
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%	HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{article} 
+\usepackage{amsmath, amsthm, amssymb} % AMS Math Package
+\usepackage{graphicx} % Allows for eps images
+\usepackage{multicol} % Allows for multiple columns
+\usepackage{framed,color}
+\usepackage{fancybox}
+\usepackage{mdframed}
+\usepackage{float}
+\usepackage{caption,subcaption}
+
+\usepackage{geometry}
+\geometry{
+top=0.5in,
+inner=0.5in,
+outer=0.5in,
+bottom=0.5in,
+headheight=1ex,
+headsep=3ex
+}
+
+
+ % Sets margins and page size
+\pagestyle{empty} % Removes page numbers
+\makeatletter % Need for anything that contains an @ command 
+\renewcommand{\maketitle} % Redefine maketitle to conserve space
+{ \begingroup \vskip 10pt \begin{center} \large {\bf \@title}
+	\vskip 10pt \large \@author \hskip 20pt \@date \end{center}
+  \vskip 10pt \endgroup \setcounter{footnote}{0} }
+\makeatother % End of region containing @ commands
+\renewcommand{\labelenumi}{(\alph{enumi})} % Use letters for enumerate
+% \DeclareMathOperator{\Sample}{Sample}
+\let\vaccent=\v % rename builtin command \v{} to \vaccent{}
+\renewcommand{\v}[1]{\ensuremath{\mathbf{#1}}} % for vectors
+\newcommand{\gv}[1]{\ensuremath{\mbox{\boldmath$ #1 $}}} 
+% for vectors of Greek letters
+\newcommand{\uv}[1]{\ensuremath{\mathbf{\hat{#1}}}} % for unit vector
+\newcommand{\abs}[1]{\left| #1 \right|} % for absolute value
+\newcommand{\avg}[1]{\left< #1 \right>} % for average
+\let\underdot=\d % rename builtin command \d{} to \underdot{}
+\renewcommand{\d}[2]{\frac{d #1}{d #2}} % for derivatives
+\newcommand{\dd}[2]{\frac{d^2 #1}{d #2^2}} % for double derivatives
+\newcommand{\pd}[2]{\frac{\partial #1}{\partial #2}} 
+% for partial derivatives
+\newcommand{\pdd}[2]{\frac{\partial^2 #1}{\partial #2^2}} 
+% for double partial derivatives
+\newcommand{\pdc}[3]{\left( \frac{\partial #1}{\partial #2}
+ \right)_{#3}} % for thermodynamic partial derivatives
+\newcommand{\ket}[1]{\left| #1 \right>} % for Dirac bras
+\newcommand{\bra}[1]{\left< #1 \right|} % for Dirac kets
+\newcommand{\braket}[2]{\left< #1 \vphantom{#2} \right|
+ \left. #2 \vphantom{#1} \right>} % for Dirac brackets
+\newcommand{\matrixel}[3]{\left< #1 \vphantom{#2#3} \right|
+ #2 \left| #3 \vphantom{#1#2} \right>} % for Dirac matrix elements
+\newcommand{\grad}[1]{\gv{\nabla} #1} % for gradient
+\let\divsymb=\div % rename builtin command \div to \divsymb
+\renewcommand{\div}[1]{\gv{\nabla} \cdot #1} % for divergence
+\newcommand{\curl}[1]{\gv{\nabla} \times #1} % for curl
+\let\baraccent=\= % rename builtin command \= to \baraccent
+\renewcommand{\=}[1]{\stackrel{#1}{=}} % for putting numbers above =
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{lem}[thm]{Lemma}
+\theoremstyle{definition}
+\newtheorem{dfn}{Definition}
+\theoremstyle{remark}
+\newtheorem*{rmk}{Remark}
+
+\usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
+\usepackage{tikz} %for making pretty figures
+\usepackage[tikz]{bclogo}
+\usepackage{tikz-3dplot}
+\usetikzlibrary{calc}
+
+%%% HEADERS & FOOTERS
+\usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
+\pagestyle{fancyplain}
+\usepackage{lastpage}
+\usepackage{siunitx}
+\pagenumbering{arabic}
+
+\lhead{Kyle Hoke}
+\chead{PHYS 243A, Homework 1\rightmark}
+\rhead{Page \thepage\ / \pageref{LastPage}}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancyfoot[C]{}
+
+%%% section* TITLE APPEARANCE
+\usepackage{sectsty}
+\allsectionsfont{\sffamily\mdseries\upshape} % (See the fntguide.pdf for font help)
+
+%%% User Defined Commands %%%%
+\newcommand{\f}[1]{f_{#1}(x)}
+\newcommand{\axis}{
+		\draw[->,thick](0,0) -- (0,5);
+		\node[above] at (0,5) {$x$};
+		\draw[->,thick](0,0) -- (5,0);
+		\node[right] at(5,0){$y$};
+		}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% END OF HEADER %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+
+
+%%% BEGIN DOCUMENT %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{\LARGE PHYS 243A Homework 1}
+\author{Kyle Hoke}
+%\date{} % Activate to display a given date or no date (if empty),
+         % otherwise the current date is printed 
+
+\begin{document}
+\maketitle
+\thispagestyle{empty}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% PROBLEM 1 %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{1.1}
+
+\begin{bclogo}[logo=\bcquestion , barre=none]
+\newline
+If we wish to produce a thin-film magnetic storage device with 100 Gbits/in$^2$, each bit is to be 5
+times as big in one dimension as the other, the total amount of open area between bits is to be the
+same as the total area occupied by the bits, and the film thickness of the medium storing the
+information is to be 10 nm, how many atoms are involved in each bit? Assume for simplicity that the
+film is pure Co, with a density of 9.0 x 1022 atoms/cm$^3$.
+\end{bclogo}
+\vspace{1cm}
+
+
+
+
+\begin{figure}[H]
+ \centering
+ \begin{tikzpicture}
+        \draw[-, blue, ultra thick] (0,0,0) -- (-1,1,1);
+\end{tikzpicture}
+\caption{Single Bit}
+\label{escher2}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% PROBLEM 2 %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newpage
+\section*{1.2}
+
+\begin{bclogo}[logo=\bcquestion , barre=none]
+\newline
+(a) Begin with the Maxwell-Boltzmann distribution for molecular velocities in an ideal gas as
+expressed in x,y,z coordinates, and derive by integration the formula for the rate at which molecules
+strike a flat surface of unit area perpendicular to one of the axes. From this, determine the time
+necessary to form a monolayer of gas on a surface, assuming a general sticking probability of PS. Note
+that this is the same derivation that can be found in many physical chemistry texts to predict the rate at
+which a gas leaks out through an orifice.
+\newline
+(b) Now make the assumption that only the bare surface area remaining on the surface after a given
+exposure time is active for a particular gas adsorption, and that PS = unity on the bare area, but zero
+elsewhere. Derive the general form of PS as a function of time for this case.\newline
+(c) If a surface is exposed to 10$^{-9}$ Torr of CO at ambient temperature, how long will it take to form the first monolayer:
+\newline 
+(i) If Ps = unity?
+\newline 
+(ii) If Ps follows the relationship of part (b)?
+\end{bclogo}
+\vspace{2cm}
+
+We begin with the Maxwell-Boltzmann distribution for molecules in an ideal gas.
+\[
+D(v) = \sqrt{\left(\dfrac{m}{2\pi kt}\right)^3}4\pi v^2 \exp{\left(-\dfrac{mv^2}{2kt}\right)}
+\]
+
+Where $D$ is the probability of finding a molecule at speed $v$. The speed $v^2 = v_x^2 + v_y^2 + v_z^2$ is in three dimensions. We first want to find the average speed of the molecules, then the flux through a single side of a unit cube when the molecules have a given number density. To find an average speed we add all the speeds up weight by their probability.
+\[
+	\bar{v}  = \sum v D(v) \Delta v,
+\]
+where $\Delta v$ represents a discrete spacing of speeds. In reality we can have continuum of speeds so to find the average speed we must sum over all possible speeds, which means an integral.
+
+\begin{align*}
+	\bar{v} &= \int_{0}^{\infty} v D(v) dv \\[3mm]
+		&= \int_{0}^{\infty} \sqrt{\left(\dfrac{m}{2\pi kt}\right)^3}4\pi v^3 \exp{\left(-\dfrac{mv^2}{2kt}\right)} \\[3mm]
+		&= \left(\dfrac{m}{2\pi kt}\right)^{3/2} 4\pi \int_{0}^{\infty} v^3 \exp{\left(-\dfrac{mv^2}{2kt}\right)}
+\end{align*}
+	
+Now we make a substitution to make the integration easier: $$x = mv^2/2kt$$. Finding dx/dv and $v^2$ in terms of $x$,  we make the substitutions and get,
+
+\[
+	\bar{v} = \left(\dfrac{m}{2\pi kt}\right)^{3/2} 4\pi\left(\dfrac{kt}{m}\right) \left(\dfrac{2kt}{m}\right) \int_{0}^{\infty} x \exp{\left(-x\right)}
+\]
+
+Looking up this solution in a table (I used Schaums) we find that the integral evaluates to unity and we end up with.
+
+\[
+	\bar{v} =  \left(\dfrac{m}{2\pi kt}\right)^{3/2} 4\pi\left(\dfrac{kt}{m}\right) \left(\dfrac{2kt}{m}\right)
+\]
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%% PROBLEM 3 %%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\newpage
+\section*{1.3}
+\begin{bclogo}[logo=\bcquestion , barre=none]
+\newline
+ (a) What would be the minimum energy required to take a cube of Pt metal 1.0 cm on a
+ side at room temperature and disperse it into tiny cubic "nanoparticles" of 10-6
+ cm on a side? Assume
+ that this is done in a perfect ultrahigh vacuum environment, with the surfaces in equilibrium with the
+ very low vapor pressure of Pt, and make use of the argument in Zangwill, p. 12, but with a key equation
+ corrected to
+ \newline 
+ (b) Estimate the fraction of the atoms that are on the surface of the 1 cm cube. Of the 10-6
+ cm cube.
+ Assume that the density of Pt atoms is 6.62 x 1022 cm-3. 
+\end{bclogo}
+\vspace{2cm}
+
+
+
+
+
+
+
+\end{document}
