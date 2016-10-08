@@ -11,9 +11,9 @@
 \usepackage{multicol} % Allows for multiple columns
 \usepackage{framed,color}
 \usepackage{fancybox}
-\usepackage{mdframed}
 \usepackage{float}
 \usepackage{caption,subcaption}
+\usepackage{mathtools}
 
 \usepackage{geometry}
 \geometry{
@@ -144,17 +144,64 @@ film is pure Co, with a density of 9.0 x 1022 atoms/cm$^3$.
 \vspace{1cm}
 
 
-
+Let's first visualize our bit with a nice image.
 
 \begin{figure}[H]
  \centering
- \begin{tikzpicture}
-        \draw[-, blue, ultra thick] (0,0,0) -- (-1,1,1);
+ \tdplotsetmaincoords{60}{125}
+\begin{tikzpicture}
+		[tdplot_main_coords,
+			cube/.style={very thick,black},
+			grid/.style={very thin,gray},
+			axis/.style={->,blue,thick}]
+	
+
+
+	%draw the top and bottom of the cube
+	\draw[cube] (0,0,0) -- (0,5,0) -- (2,5,0) -- (2,0,0) -- cycle;
+	\draw[cube] (0,0,3) -- (0,5,3) -- (2,5,3) -- (2,0,3) -- cycle;
+	
+	%draw the edges of the cube
+	\draw[cube] (0,0,0) -- (0,0,3);
+	\draw[cube] (0,5,0) -- (0,5,3);
+	\draw[cube] (2,0,0) -- (2,0,3);
+	\draw[cube] (2,5,0) -- (2,5,3);
+	
+	%place labels on the cube edges
+	\draw(2,0,1.5) node[anchor=east]{$x$};
+	\draw(2,2.5,0) node[anchor=north]{$5x$};
+	\draw(1, 5, 0) node[anchor=north west]{$10 nm$};
+	
 \end{tikzpicture}
-\caption{Single Bit}
-\label{escher2}
+ \caption{A single bit}
+ \label{bit}
 \end{figure}
 
+We are told that we want 100 Gbits/in$^2$ and that half of the area is open, thus 
+\[
+	A_{bits} = 0.5 \,\, \text{in}^2  = 3.23 \times 10^{-4} \,\, \text{m}^2.
+\]
+
+Each square inch contains 100 Gbits or $10^11$ bits. We can compare this to the knowledge that a single  bit has an cross sectional area of $A = 5x^2$, so we set up a simple ratio to solve for $x$:
+
+\begin{align*}
+	\dfrac{3.23\times 10^{-4} \,\text{m}^2}{10^{11} \,\text{bits}} &= \dfrac{5x^2\,\text{m}^2}{1 \text{bit}}\\[3mm]
+	x &= \sqrt{\dfrac{3.23\times10^{-4}}{5\times10^{11}}}\,\,\text{m} \\[3mm]
+	x &= 2.54\times 10^{-8} \,\text{m}\\[3mm]
+	x &= 25.4 \, \text{nm}
+\end{align*}
+
+We can now directly calculate the volume of the bit as pictured in Figure \ref{bit}.
+\begin{align*}
+	V_{bit\_stack} &= 5(25.4)^2 10\\[3mm]
+		&=  32258\,\,\text{nm}^3\\[3mm]
+		&= 3.23\times 10^{-17} \,\,\text{cm}^3
+\end{align*}
+
+Now we can use the density of Co atoms to find out how many atoms are in a single bit.
+\[
+\dfrac{3.23\times 10^{-17}\,\text{cm}^3}{1\,\text{bit}} \cdot \dfrac{9\times10^{22}\,\text{atoms}}{1\,\text{cm}^3} = \boxed{ \dfrac{2.9\times 10^6 \,\text{atoms}}{1\,\text{bit}} }
+\]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 2 %%%%%%%%%%%%%%%%%%%%%
@@ -182,6 +229,7 @@ elsewhere. Derive the general form of PS as a function of time for this case.\ne
 \end{bclogo}
 \vspace{2cm}
 
+\subsection*{Part a:}
 We begin with the Maxwell-Boltzmann distribution for molecules in an ideal gas.
 \[
 D(v) = \sqrt{\left(\dfrac{m}{2\pi kt}\right)^3}4\pi v^2 \exp{\left(-\dfrac{mv^2}{2kt}\right)}
@@ -207,15 +255,45 @@ Now we make a substitution to make the integration easier: $$x = mv^2/2kt$$. Fin
 
 Looking up this solution in a table (I used Schaums) we find that the integral evaluates to unity and we end up with.
 
+\begin{align*}
+	\bar{v} &=  \left(\dfrac{m}{2\pi kt}\right)^{3/2} 4\pi\left(\dfrac{kt}{m}\right) \left(\dfrac{2kt}{m}\right)\\[3mm]
+		&= \sqrt{\dfrac{8kT}{\pi m}}
+\end{align*}
+	
+The flux of particles on the surfaces of a cube will be
 \[
-	\bar{v} =  \left(\dfrac{m}{2\pi kt}\right)^{3/2} 4\pi\left(\dfrac{kt}{m}\right) \left(\dfrac{2kt}{m}\right)
+ J_{cube} = n\bar{v},
+\]
+where $n$ is the number density of particles (or molecules) and $\bar{v}$ is the average speed of the particles. The particles are traveling in all directions with equal probability and at the same speed. We are only interested in the flux through a single face so we say,
+\[J_{face} = \dfrac{1}{6}n\bar{v}\].
+The number density is just the number of molecules per volume or $N/V$. Using the ideal gas law we can re-write the flux of particles as,
+\[
+	J_{face} = \dfrac{1}{6}\dfrac{P}{kT} \sqrt{\dfrac{8kT}{\pi m}}.
+\]
+Simplifying we get,
+\[
+	J_{face} = P\sqrt{\dfrac{2}{9\pi mkT}}\quad \text{molecules}/\text{m}^2\cdot \text{s}
 \]
 
+With this we can say that the number of molecules that will stick on a typical surface of area $A$ per second is,
+\[
+	\alpha = J_{face}P_s At
+\]
+where $P_s$ is some general sticking probability for the impinging molecules/atoms/particles. If we divide out the area of the surface then we get the surface density of the layer on the surface after a time $t$.
+\[
+	\rho = J_{face}P_s t
+\]
+If we assume that the sticking probability is unity and that a typical suface density is $\approx 10^{15}$ molecules/m$^2$ then we can estimate the time it takes to form a monolayer under various pressures. We use nitrogen gas as an example since it behaves as an ideal gas in many cases.
+\begin{align*}
+	t(P) &= \dfrac{10^{15}}{P}\sqrt{\dfrac{9\pi mkT}{2}}\\[3mm]
+		&\approx \dfrac{2.2\times10^{-7}}{P[\text{Torr}]}\quad \text{seconds}.
+\end{align*}
+If the pressure of the chamber is about 10$^{-6}$ Torr then the time to form a monolayer will be,
+\[
+	t \approx 0.2 \quad \text{seconds}.
+\]
 
-
-
-
-
+\subsection*{Part b:}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 3 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
