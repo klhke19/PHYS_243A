@@ -260,40 +260,71 @@ Looking up this solution in a table (I used Schaums) we find that the integral e
 		&= \sqrt{\dfrac{8kT}{\pi m}}
 \end{align*}
 	
-The flux of particles on the surfaces of a cube will be
+The flux of particles on the surface of the entire chamber is
 \[
  J_{cube} = n\bar{v},
 \]
-where $n$ is the number density of particles (or molecules) and $\bar{v}$ is the average speed of the particles. The particles are traveling in all directions with equal probability and at the same speed. We are only interested in the flux through a single face so we say,
-\[J_{face} = \dfrac{1}{6}n\bar{v}\].
-The number density is just the number of molecules per volume or $N/V$. Using the ideal gas law we can re-write the flux of particles as,
-\[
-	J_{face} = \dfrac{1}{6}\dfrac{P}{kT} \sqrt{\dfrac{8kT}{\pi m}}.
-\]
-Simplifying we get,
-\[
-	J_{face} = P\sqrt{\dfrac{2}{9\pi mkT}}\quad \text{molecules}/\text{m}^2\cdot \text{s}
-\]
+where $n$ is the number density of particles (or molecules) and $\bar{v}$ is the average speed of the particles. The particles are traveling in all directions with equal probability and at the same speed. We are only interested in the flux through a single face so we  can integrate over all the particles that pass through a plane of area $A$ in the chamber,
+\begin{align*}
+	J_{plane} &= \int\limits_{\theta = 0}^{2\pi} \int\limits_{\phi = 0}^{\pi/2} \vec{J}\cdot d\vec{A} \sin(\theta) d\theta d\phi\\[3mm]
+		&= JA2\pi \int\limits_{\phi = 0}^{\pi/2}\cos(\phi)\sin(\phi)d\phi\\[3mm]
+		&= JA2\pi \left[\dfrac{\sin(\phi)^2}{2}\right]_{0}^{\pi/2}\\[3mm]
+		&= \pi J A
+\end{align*}
+
 
 With this we can say that the number of molecules that will stick on a typical surface of area $A$ per second is,
 \[
-	\alpha = J_{face}P_s At
+	\alpha = \pi J P_s At
 \]
 where $P_s$ is some general sticking probability for the impinging molecules/atoms/particles. If we divide out the area of the surface then we get the surface density of the layer on the surface after a time $t$.
 \[
-	\rho = J_{face}P_s t
+	\rho_s = \pi JP_s t
 \]
-If we assume that the sticking probability is unity and that a typical suface density is $\approx 10^{15}$ molecules/m$^2$ then we can estimate the time it takes to form a monolayer under various pressures. We use nitrogen gas as an example since it behaves as an ideal gas in many cases.
+The time it takes to form a monolayer is given by,
 \begin{align*}
-	t(P) &= \dfrac{10^{15}}{P}\sqrt{\dfrac{9\pi mkT}{2}}\\[3mm]
-		&\approx \dfrac{2.2\times10^{-7}}{P[\text{Torr}]}\quad \text{seconds}.
+	t &= \dfrac{\rho_s}{\pi JP_s}\\[3mm]
+		&= \dfrac{\rho_s}{\pi n\bar{v} P_s}\\[3mm]
+		&= \dfrac{\rho_s}{\pi n P_s}\sqrt{\dfrac{\pi m}{8k_bT}}\\[3mm]
+		&= \dfrac{\rho_{s}[pts/m^2]}{n[pts/m^3]P_s}\sqrt{\dfrac{m[kg]}{8\pi k_b[J/K] T]K]}}
 \end{align*}
-If the pressure of the chamber is about 10$^{-6}$ Torr then the time to form a monolayer will be,
-\[
-	t \approx 0.2 \quad \text{seconds}.
-\]
+We make a few substitutions to make things a bit easier,
+\begin{align*}
+	n = \dfrac{N}{V} = \dfrac{P[Pa]}{k_b[J/K] T[K]} &= 7.5\times10^{-3} \dfrac{P[Torr]}{k_b[J/K]T[K]}\\[3mm]
+	m[kg] &= 10^{-3}\dfrac{M}{N_A}
+\end{align*}
+Using these substitutions, we find that the time to form a monolayer, in seconds, is,
+\begin{align*}
+	t &= \dfrac{\rho_sk_b T}{7.5\times10^{-3}PP_s}\sqrt{\dfrac{10^{-3}M}{8\pi k_bTN_A}}\\[3mm]
+		&= \dfrac{0.84 \rho_s }{PP_s}\sqrt{\dfrac{Mk_bT}{N_A}}\\[3mm]
+		&= \dfrac{0.4\times10^{-23}\rho_s[pts/m^2]}{P[Torr]P_s}\sqrt{M[AMU]T[K]}
+\end{align*}
+
 
 \subsection*{Part b:}
+
+Assuming the initial sticking probability is unity then the fraction of the covered surface on the substrate is going to increase very quickly and eventually converage to unity at time inifinty. Let's call this fraction $\beta$. We can then write the sticking probability as a function of $\beta$.
+\begin{align*}
+	P_s(t) &\propto 1-\beta(t)\\[3mm]
+		&\propto 1-\left(1-e^{-c_0t}\right)\\[3mm]
+		&\propto e^{-c_0t}\\[3mm]
+		&= c_1e^{-c_0t}
+\end{align*}
+At $t=0$ the sticking probability should be unity thus $c_1=1$. We do not have a way of obtaining the constant $c_0$ so we leave the sticking probability in this general form.
+\[
+	P_s(t) = e^{-c_0t}
+\]
+
+\subsection*{Part c:}
+
+We will assume that the chamber is filled with nitrogen gas so $M=28$, at ambient temperature $T=298K$, and a typical surface density is $\rho_s = 10^19$ atoms /m$^2$. If $P_s = 1$ and $P=10^{-9}$ Torr then the time to form a monolayer is,
+
+\begin{align*}
+	t(10^{-9}) &= \dfrac{0.4\times10^{-23}\cdot10^{19}}{10^{-9}}\sqrt{28 \cdot 298}\\[3mm]
+		&= 3.654 \times 10^6 \quad \text{seconds}
+\end{align*}
+
+If the conditions from part b describe the sticking probability then a complete monolayer will probably never form since the sticking probability gets arbitrarily close to zero which means the time to form a monolayer will go to infinity.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 3 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
