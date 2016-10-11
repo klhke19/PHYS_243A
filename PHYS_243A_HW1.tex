@@ -339,13 +339,64 @@ If the conditions from part b describe the sticking probability then a complete 
 \[
 	\gamma = E_{coh} \left(\dfrac{Z_s}{Z}\right)\left(\dfrac{N_s}{2}\right)
 \]
-\item  Estimate the fraction of the atoms that are on the surface of the 1 cm cube. Of the 10-6 cm cube. Assume that the density of Pt atoms is 6.62 x 1022 cm-3. 
+\item  Estimate the fraction of the atoms that are on the surface of the 1 cm cube. Of the 10$^{-6}$ cm cube. Assume that the density of Pt atoms is 6.62 x 10$^{22}$ cm$^{-3}$. 
 \end{enumerate}
- 
 \end{bclogo}
-\vspace{2cm}
+\vspace{2mm}
 
 
+ 
+ \subsection*{Part a:}
+ 
+ We first start by noting that Pt is an fcc metal which means the bulk coordination number is 12 and (assuming we are cleaving on a {100} face) the surface coordination number will be 4. Thus,
+ \[
+ 	\dfrac{Z_s}{Z} = 0.25.
+ \]
+We simply look up the cohesive energy of Pt which is $E_{coh} = 5.84$ eV/atom. Now we need to find $\gamma$ for the nanoparticles to find the minimum amount of energy required to take the larger cube apart. The number of nanoparticles, $n$, is found by dividing the volume of the larger cube by the volume of a single nanoparticle.
+
+\[
+	n = \dfrac{1 \,\text{cm}^3}{10^{-18}\,\text{cm}^3} = 10^{18} \,\text{particles}
+\] 
+
+The total surface area of all the nanoparticles is the surface area of a single particle multiplied by the number of particles,
+
+\begin{align*}
+	SA &= \left(6\times 10^{-12}\right)n\\[3mm]
+		&= 6 \times 10^6 \quad \text{cm}^2
+\end{align*}
+
+We are given the density of the Pt atoms and since we are dealing with a cube we can easily extract the surface density from the given value,
+\begin{align*}
+	N_s &= \rho^{2/3}\\
+		&= 1.64\times 10^{15} \, \text{atoms/cm$^2$}
+\end{align*}
+
+Now we can calculate the surface energy density,
+\begin{align*}
+	\gamma &= E_{coh} \left(\dfrac{Z_s}{Z}\right)\left(\dfrac{N_s}{2}\right)\\[3mm]
+		&= 5.84 \cdot (0.25) \cdot (0.5) \cdot \left(1.64\times 10^{15}\right)\\[3mm]
+		&= 1.19 \times 10^{15} \quad \text{eV/cm$^2$}\\[3mm]
+		&= 1.9 \times 10^{-4} \quad \text{J/cm$^2$}
+\end{align*}
+
+Now we simply muliply this by the surface area of the nanoparticles to get the minimum energy required to form the nanoparticles,
+\begin{align*}
+ \text{Energy Req.} &= \gamma \cdot \left(6\times 10^6\right)\\[3mm]
+ 	&\approx 1200 J
+\end{align*}
+
+\subsection*{Part b:}
+
+The surface fraction of the atoms is given by,
+\[
+SF = \dfrac{L^2 - (L-2D)^3}{L^3} 
+\]
+
+The diameter of a Pt atom is about two angstroms thus,
+\begin{align*}
+SF(1\,\text{cm}) &= 2\times 10^{-7}\\[3mm]
+SF(10^{-6}\,\text{cm}) &= 0.16
+\end{align*}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 4 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
