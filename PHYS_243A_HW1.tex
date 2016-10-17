@@ -14,6 +14,8 @@
 \usepackage{float}
 \usepackage{caption,subcaption}
 \usepackage{mathtools}
+\usepackage{pgffor}
+\usepackage{siunitx}
 
 \usepackage{geometry}
 \geometry{
@@ -382,7 +384,7 @@ Now we can calculate the surface energy density,
 Now we simply muliply this by the surface area of the nanoparticles to get the minimum energy required to form the nanoparticles,
 \begin{align*}
  \text{Energy Req.} &= \gamma \cdot \left(6\times 10^6\right)\\[3mm]
- 	&\approx 1200 J
+ 	&\boxed{\approx 1200 \quad \text{J}}
 \end{align*}
 
 \subsection*{Part b:}
@@ -393,10 +395,12 @@ SF = \dfrac{L^2 - (L-2D)^3}{L^3}
 \]
 
 The diameter of a Pt atom is about two angstroms thus,
-\begin{align*}
-SF(1\,\text{cm}) &= 2\times 10^{-7}\\[3mm]
-SF(10^{-6}\,\text{cm}) &= 0.16
-\end{align*}
+\[
+\boxed{SF(1\,\text{cm}) = 2\times 10^{-7}}
+\]
+\[
+\boxed{SF(10^{-6}\,\text{cm}) = 0.16}
+\]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 4 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -415,7 +419,30 @@ SF(10^{-6}\,\text{cm}) &= 0.16
 \end{bclogo}
 \vspace{2cm}
 
+Using the equation given in problem 3 we calculate the surface tension using tables of values given in lecture. These calculations are done in an excel sheet. The differences between the derived values and Zangwill's values in the different regions of orbital energy are discussed on the following page.
 
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+    	\node[anchor=south west,inner sep=0] at (0,0) 									 		{\includegraphics[scale=0.75]{prob_4_overlay.png}};
+    	\draw[-](2,1.5) -- (2,12) node[anchor=east] {$\leftarrow$ 3p};
+    	\draw[-](2.85,1.5) -- (2.85,12) node[anchor=east] {4s};
+    	\draw[-, dashed](4.8,1.5) -- (4.8,11.5) node[anchor=south] {3d};
+    	\draw[-](7,1.5) -- (7,12);
+    	\draw[-, dashed](8,1.5) -- (8,11.5) node[anchor=south] {4p};
+	\end{tikzpicture}
+	\caption{Derived values overlayed with plot from Zangwill.}
+	\label{overlay}
+\end{figure}
+
+\newpage
+\begin{itemize}
+\item[3p-] There are no systematic discrepancies here.
+\item[4s-] The derived values show a smaller surface tension than was observed by Zangwill when the orbital is filled
+\item[3d-]There are two regions of interest here. (1)Before d$^5$: Derived values have a similar trend, but with consistently lower values. (2) After d$^5$: The derived values taper off faster when the orbital is near half full, then the trends begin to match well again.
+\item[4p-]The derived values are larger than Zangwill's in this region, and the sharp drop in surface tension when the p orbital is half full does not appear in the derived values.
+\end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 5 %%%%%%%%%%%%%%%%%%%%%
@@ -435,9 +462,26 @@ placed on the surface, and that this lowers the water-air surface tension to 36 
 \end{bclogo}
 \vspace{2cm}
 
+\subsection*{Part a}
+Young's equation tells us,
+\[
+	\cos\theta = \dfrac{\gamma_{SG} - \gamma_{SL}}{\gamma_{LG}}
+\]
+Plugging in the given values we find that,
+\[
+	\gamma_{SG} - \gamma_{SL} = \cos(150)72\quad \text{erg/cm$^2$}.\\[3mm]
+\]
+Thus the relative values of the surface tensions of the water-glass surface and the glass-air surface are related by,
+\[
+\boxed{\gamma_{SL} - \gamma_{SG} = 62.35 \quad \text{erg/cm$^2$}.}
+\]
+\subsection*{Part b}
 
-
-
+If the relative values between the surface tensions of the water-glass surface and the glass-air surface are unchaged then we can write,
+\[
+\cos\theta = \dfrac{62.35}{36} = 1.722.
+\]
+This equation is not valid since inverse cosine is undefined for valus outside of [-1,1]. However, reducing the surface tension of the water should result in improved wetting and thus a lowering of the contact angle.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 6 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -453,7 +497,20 @@ Consider the surface of an alloy of the noble metals Cu and Ag whose bulk compos
 \end{bclogo}
 \vspace{2cm}
 
-
+The surface tension of Cu is higher than the surface tension of Ag so,
+\[
+\Delta F_{\circ} \propto \gamma_{Cu} - \gamma_{Ag} > 0
+\]
+and we can write,
+\begin{align*}
+\dfrac{X_{Cu}^S}{X_{Ag}^S} &= \dfrac{X_{Cu}^B}{X_{Ag}^B}e^{-\Delta F_{\circ}/kT}\\[3mm]
+	&= 9e^{-\Delta F_{\circ}/kT},\\[3mm]
+\end{align*}
+and since $\Delta F_{\circ} > 0$ the exponential ends up in the denominator making 
+\[
+\dfrac{X_{Cu}^S}{X_{Ag}^S} < 0.
+\]
+This implies that the surface composition of this alloy, at equilibrium, will be silver rich.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 7 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -483,11 +540,216 @@ outlined in lecture to calculate the polar and azimuthal angles of the innermost
 \end{bclogo}
 \vspace{2cm}
 
+\subsection*{Part a}
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+	\foreach \x in {0,0.5,1,...,15.5}
+		\foreach \y in {0,0.5,1,...,11.5}
+			{
+			\fill(\x,\y)circle (0.1cm);
+			}
+	
+	%the 2x2R45
+	\draw[-](-1,-1) --(6,-1) -- (6,6) --(-1,6)--cycle;
+	\node at (2.5,-1)[anchor=north] {$(\sqrt{2}\times\sqrt{2})$R45};
+	\foreach \x in {0,1,...,4}
+		\foreach \y in {0,1,...,4}
+			{
+			\draw(\x,\y) circle(0.2cm);
+			}
+	\foreach \x in {0.5,1.5,...,5}
+		\foreach \y in {0.5,1.5,...,5}
+			{
+			\draw (\x,\y) circle (0.2cm);
+			}
+	
+	%5x5R26.6
+	\pgfmathsetmacro{\xshift}{8}
+	\draw[-](8,-1)--(15,-1)--(15,6)--(8,6)--cycle;
+	\foreach \x in {8,10.5,...,13}
+		\foreach \y in {0,2.5,...,5}
+			{
+			\draw (\x,\y) circle (0.2cm);
+			}
+	\foreach \x in {9.5,12,...,14.5}
+		\foreach \y in {0.5,3,...,5.5}
+			{
+			\draw (\x,\y) circle (0.2cm);
+			}
+	\foreach \x in {8.5,11,...,14.5}
+		\foreach \y in {1,3.5,...,6}
+			{
+			\draw (\x,\y) circle (0.2cm);
+			}
+	\foreach \x in {10,12.5,...,15}
+		\foreach \y in {1.5,4,...,4}
+			{
+			\draw (\x,\y) circle (0.2cm);
+			}
+	\foreach \x in {9,11.5,...,14}
+		\foreach \y in {2,4.5,...,5.5}
+			{
+			\draw (\x,\y) circle (0.2cm);
+			}
+	\node at (11.5,-1)[anchor=north] {$(\sqrt{5}\times\sqrt{5})$R26.6};
+	
+	%10x10R18.4
+	\draw[-](-1,6.5) -- (6,6.5) -- (6,11.5) -- (-1,11.5) -- cycle;
+	\pgfmathsetmacro{\yshift}{7}
+	\foreach \position in {(0,2.5+\yshift),(1,0.5+\yshift),(1.5,2+\yshift),(2.5,0+\yshift),(3,1.5+\yshift),(4.5,1+\yshift)}
+		\draw \position circle (0.2cm);
+	\foreach \position in {(0.5, 4+\yshift), (2,3.5+\yshift), (3.5, 3+\yshift),(5, 2.5+\yshift)}
+		\draw \position circle (0.2cm);
+	\node[label=above:$(\sqrt{10}\times\sqrt{10})$R18.4] at (2.5,11.5){};
+	
+	
+	%17x17R14
+	\draw[-](7.5,6.5) -- (15, 6.5) -- (15,11.5) -- (7.5,11.5) -- cycle;
+	\foreach \position in {(0+\xshift,1+\yshift),(0.5+\xshift,3+\yshift)}
+		\draw \position circle (0.2cm);
+	\foreach \position in {(2+\xshift,0.5+\yshift),(2.5+\xshift,2.5+\yshift)}
+		\draw \position circle (0.2cm);
+	\foreach \position in {(4+\xshift,0+\yshift),(4.5+\xshift,2+\yshift)}
+		\draw \position circle (0.2cm);
+	\foreach \position in {(6.5+\xshift,1.5+\yshift)}
+		\draw \position circle (0.2cm);
+	\foreach \position in {(3+\xshift,4.5+\yshift),(5+\xshift,4+\yshift)}
+		\draw \position circle (0.2cm);
+	\foreach \position in {(0+\xshift,1+\yshift),(0.5+\xshift,3+\yshift)}
+		\draw \position circle (0.2cm);
+	\node[label=above:$(\sqrt{17}\times\sqrt{17})$R14] at (12,11.5){};
+\end{tikzpicture}
+\end{figure}
 
 
+\subsection*{Part b}
+The relative coverage is a simple division of areas.
+\begin{align*}
+	\text{Relative Coverage: } &\left(\sqrt{2}\times\sqrt{2}\right) \to 50\%\\[3mm]
+		&\left(\sqrt{5}\times\sqrt{5}\right) \to 20\%\\[3mm]
+		&\left(\sqrt{10}\times\sqrt{10}\right) \to 10\%\\[3mm]
+		&\left(\sqrt{17}\times\sqrt{17}\right) \to 5.9\%\\[3mm]
+\end{align*}
 
 
+\subsection*{Part c}
 
+\begin{figure}[H]
+\centering
+\begin{tikzpicture}
+	\foreach \x in {0,2,4}
+		\foreach \y in {0,2,4}
+			{
+			\fill(\x,\y)circle (0.1cm);
+			\draw(\x,\y)circle (0.2cm);
+			}
+	\foreach \x in {1,3}
+		\foreach \y in {1,3}
+			\draw(\x,\y) circle(0.2cm);
+			
+	\draw[<->](-1,2) -- (-1,4);
+	\node[label=left:\rotatebox{90}{$17.8$nm$^{-1}$}] at (-1,3){};
+	
+	\draw[<->](-0.25,0.25) -- (0.75,1.25);
+	\node[label=center:$12.6$nm$^{-1}$] at (-0.6,0.75){};
+	\node at (0.1,0)[anchor=west]{$_{\bar{2}0}^{\bar{1}\bar{1}}$};
+	\node at (2.1,0)[anchor=west]{$_{\bar{1}1}^{0\bar{1}}$};
+	\node at (4.1,0)[anchor=west]{$_{02}^{1\bar{1}}$};
+	\node at (0.1,2)[anchor=west]{$_{\bar{1}\bar{1}}^{\bar{1}0}$};
+	\node at (2.1,2)[anchor=west]{$_{00}^{00}$};
+	\node at (4.1,2)[anchor=west]{$_{10}^{11}$};
+	\node at (0.1,4)[anchor=west]{$_{0\bar{2}}^{\bar{1}1}$};
+	\node at (2.1,4)[anchor=west]{$_{01}^{1\bar{1}}$};
+	\node at (4.1,4)[anchor=west]{$_{11}^{20}$};
+	\node at (1.1,1)[anchor=west]{$_{\bar{1}0}$};
+	\node at (3.1,1)[anchor=west]{$_{01}$};
+	\node at (1.1,3)[anchor=west]{$_{0\bar{1}}$};
+	\node at (3.1,3)[anchor=west]{$_{10}$};
+\end{tikzpicture}
+\caption{LEED pattern. The filled circles and supercript correspond to Ni, while the open circles and the subscript corresponds to the O.}
+\label{leed}
+\end{figure}
+
+We want to calculate the polar and azimuthal angles of the 13 innermost LEED spots. We first find the momentum of the electron beam with $E=150$ eV.
+\begin{align*}
+	\lambda &= \dfrac{h}{\sqrt{2mE}}\\[3mm]
+		&= \dfrac{6.626\times 10^{-34}\,\,\text{J$\cdot$s}}{\left(2.9\times10^{11}\,\,\text{kg}\cdot 150\,\,\text{eV}\cdot 1.609\times10^{-19}\,\,\text{J/eV}\right)^{1/2}}\\[3mm]
+		&= 0.1\,\,\text{nm}
+\end{align*}
+With this we can find the momentum,
+\begin{align*}
+|k| &= \dfrac{2\pi}{\lambda}\\[3mm]
+	&= 62.8 \,\, \text{nm}^{-1}
+\end{align*}
+
+Next we find the length of the reciprocal lattice vectors. Ni is an FCC lattice with $a_0 = \SI{3.52}{\angstrom} = 0.352$nm.
+\begin{align*}
+|g_0| &= \dfrac{2\pi}{0.352}\\[3mm]
+	&= 17.8\,\,\text{nm}^{-1}
+\end{align*}
+The surface lattice spacing is just scaling of the Ni FCC lattice with $a_0 = a_0(Ni)\cdot \sqrt{2} = 0.498$nm.
+\[
+|g_0| = 12.6\,\,\text{nm}^{-1}
+\]
+
+Now consider a section of the ewald sphere shown in figure \ref{ewald}. With some simple triginometry we can find the polar angle ($\phi$).
+\[
+	\phi = \arcsin\left(\dfrac{|g|}{|k_e|}\right)
+\]
+\begin{figure}[H]
+\centering
+\tdplotsetmaincoords{60}{110}
+%
+\pgfmathsetmacro{\rvec}{1}
+\pgfmathsetmacro{\thetavec}{30}
+\pgfmathsetmacro{\phivec}{60}
+%
+\begin{tikzpicture}[scale=5,tdplot_main_coords]
+\coordinate (O) at (0,0,0);
+\draw[thick,-] (0,0,0) -- (1,0,0);
+\draw[thick,-] (0,0,0) -- (0,1,0);
+\draw[thick,-] (0,0,0) -- (0,0,1);
+\tdplotsetcoord{P}{\rvec}{\thetavec}{\phivec}
+\draw[-stealth,color=red] (O) -- (P);
+\draw[dashed, color=red] (O) -- (Pxy);
+\draw[dashed, color=red] (P) -- (Pxy);
+\tdplotdrawarc{(O)}{0.2}{0}{\phivec}{anchor=north}{$\theta$}
+\tdplotsetthetaplanecoords{\phivec}
+\tdplotdrawarc[tdplot_rotated_coords]{(0,0,0)}{0.5}{0}%
+{\thetavec}{anchor=south west}{$\phi$}
+\draw[dashed,tdplot_rotated_coords] (\rvec,0,0) arc (0:90:\rvec);
+\draw[dashed] (\rvec,0,0) arc (0:90:\rvec);
+\tdplotsetrotatedcoords{\phivec}{\thetavec}{0}
+\tdplotsetrotatedcoordsorigin{(P)}
+\end{tikzpicture}
+\caption{Section of the ewald sphere.}
+\label{ewald}
+\end{figure}
+
+Thus we have,
+\begin{center}
+ \begin{tabular}{||c c c c c||} 
+ \hline
+ Ni & O & $\vert$ g $\vert$ (nm$^{-1}$) & $\theta$ ($^\circ$) & $\phi$ ($^\circ$)\\ [0.5ex] 
+ \hline\hline
+ 00 & 00 & 0 & 0 & 0 \\[1ex] 
+ - & 10 & 12.6 & 45 & 11.6 \\[1ex] 
+ - & 01 & 12.6 & 135 & 11.6 \\[1ex] 
+ - & $\bar{1}$0 & 12.6 & 225 & 11.6 \\[1ex] 
+ - & 0$\bar{1}$ & 12.6 & 315 & 11.6 \\[1ex] 
+ 10 & 11 & 17.8 & 90 & 16.5 \\[1ex] 
+ $\bar{1}0$ & $\bar{1}\bar{1}$ & 17.8 & 270 & 16.5 \\[1ex] 
+ 01 & 1$\bar{1}$ & 17.8 & 0 & 16.5 \\[1ex] 
+ 0$\bar{1}$ & $\bar{1}$1 & 17.8 & 180 & 16.5 \\[1ex] 
+ 11 & 20 & 25.2 & 45 & 23.7 \\[1ex] 
+ $\bar{1}$1 & 0$\bar{2}$ & 25.2 & 315 & 23.7 \\[1ex] 
+ 1$\bar{1}$ & 02 & 252 & 135 & 23.7 \\[1ex] 
+ $\bar{1}\bar{1}$ & $\bar{2}$0 & 25.2 & 225 & 23.7 \\[1ex] 
+ $\bar{1}\bar{1}$ & $\bar{2}0$ & 25.2 & 225 & 23.7 \\ [2ex] 
+ \hline
+\end{tabular}
+\end{center}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%% PROBLEM 8 %%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
